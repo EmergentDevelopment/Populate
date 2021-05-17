@@ -1,37 +1,40 @@
 {
   "schemaVersion": 1,
-  "id": "modid",
+  "id": "populate",
   "version": "${version}",
 
-  "name": "Example Mod",
-  "description": "This is an example description! Tell everyone what your mod is about!",
+  "name": "Populate",
+  "description": "Schematic world gen mod.",
   "authors": [
-    "Me!"
+    {
+      "name": "thegiggitybyte",
+      "contact": {
+        "homepage": "https://discord.gg/UPKuVWgU4G"
+      }
+    },
+    {
+      "name": "Guardian259"
+    }
   ],
+
   "contact": {
-    "homepage": "https://fabricmc.net/",
-    "sources": "https://github.com/FabricMC/fabric-example-mod"
+    "sources": "https://github.com/EmergentDevelopment/Populate",
+    "issues": "https://github.com/EmergentDevelopment/Populate/issues"
   },
 
-  "license": "CC0-1.0",
-  "icon": "assets/modid/icon.png",
+  "license": "GPL v3",
+  "icon": "assets/populate/icon.png",
 
   "environment": "*",
   "entrypoints": {
     "main": [
-      "net.fabricmc.example.ExampleMod"
+      "dev.emergent.populate.Populate"
     ]
   },
-  "mixins": [
-    "modid.mixins.json"
-  ],
 
   "depends": {
     "fabricloader": ">=0.7.4",
     "fabric": "*",
     "minecraft": "1.16.x"
-  },
-  "suggests": {
-    "another-mod": "*"
   }
 }
