@@ -31,6 +31,9 @@
       "dev.emergent.populate.Populate"
     ]
   },
+  "mixins": [
+    "populate.mixins.json"
+  ],
 
   "depends": {
     "fabricloader": ">=0.7.4",

@@ -1,12 +1,9 @@
 package dev.emergent.populate;
 
-import me.lortseam.completeconfig.api.ConfigContainer;
-import me.lortseam.completeconfig.api.ConfigGroup;
+public final class Settings {
 
-public class Settings implements ConfigContainer {
 
-    public static class SchematicTypes implements ConfigGroup {
 
-    }
+    public static void init() {}
 
 }

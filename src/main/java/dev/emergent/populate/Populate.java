@@ -1,7 +1,6 @@
 package dev.emergent.populate;
 
 import dev.emergent.populate.blueprint.Schematic;
-import me.lortseam.completeconfig.data.Config;
 import net.fabricmc.api.ModInitializer;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -14,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 
+
 public class Populate implements ModInitializer {
     public static final Logger LOGGER = LogManager.getLogger("populate");
     
@@ -22,11 +22,7 @@ public class Populate implements ModInitializer {
     @Override
     public void onInitialize() {
         Populate.LOGGER.info("Initializing Populate");
-        
-        Config config = Config.builder("populate")
-                .add(new Settings())
-                .build();
-        
+
         Path treePath = Paths.get("./populate/tree");
         Path orePath = Paths.get("./populate/ore");
         Path structurePath = Paths.get("./populate/structure");
@@ -69,3 +65,4 @@ public class Populate implements ModInitializer {
         return schematics;
     }
 }
+

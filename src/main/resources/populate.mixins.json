@@ -3,7 +3,11 @@
   "minVersion": "0.8",
   "package": "dev.emergent.populate.mixin",
   "compatibilityLevel": "JAVA_8",
-  "mixins": [],
+  "mixins": [
+  ],
+  "client": [
+    "OptionsScreenMixin"
+  ],
   "injectors": {
     "defaultRequire": 1
   }
