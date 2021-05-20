@@ -5,7 +5,7 @@ import net.fabricmc.api.ModInitializer;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.io.IOException;
+import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -22,7 +22,7 @@ public class Populate implements ModInitializer {
     @Override
     public void onInitialize() {
         Populate.LOGGER.info("Initializing Populate");
-
+        
         Path treePath = Paths.get("./populate/tree");
         Path orePath = Paths.get("./populate/ore");
         Path structurePath = Paths.get("./populate/structure");
@@ -42,6 +42,7 @@ public class Populate implements ModInitializer {
     private void createDirectory(Path path) {
         try {
             Files.createDirectory(path);
+        } catch (FileAlreadyExistsException ignored) {
         } catch (Exception ex) {
             Populate.LOGGER.warn("Could not create directory " + path.toAbsolutePath().toString(), ex);
         }
@@ -53,8 +54,8 @@ public class Populate implements ModInitializer {
         try (Stream<Path> filePaths = Files.walk(path)) {
             filePaths.filter(Files::isRegularFile).forEach((filePath) -> {
                 try {
-                    schematics.add(new Schematic().load(filePath));
-                } catch (IOException ex) {
+                    schematics.add(new Schematic().loadFromFile(filePath));
+                } catch (Exception ex) {
                     Populate.LOGGER.warn("Could not load file " + filePath.getFileName().toString(), ex);
                 }
             });
