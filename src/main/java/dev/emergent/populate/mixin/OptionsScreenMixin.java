@@ -1,6 +1,5 @@
 package dev.emergent.populate.mixin;
 
-import dev.emergent.populate.settings.FeaturesOptionsScreen;
 import dev.emergent.populate.settings.TypesOptionsScreen;
 import me.lambdaurora.spruceui.Position;
 import me.lambdaurora.spruceui.widget.SpruceButtonWidget;
