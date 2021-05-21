@@ -14,7 +14,7 @@ import java.util.stream.Stream;
 
 public class FilePathRegistry {
 
-    protected static final Map<GenerationStep.Feature, List<Blueprint>> BLUEPRINTS = new HashMap<>();
+    public static final Map<GenerationStep.Feature, List<Blueprint>> BLUEPRINTS = new HashMap<>();
 
     private static void createDirectory(Path path) {
         try {

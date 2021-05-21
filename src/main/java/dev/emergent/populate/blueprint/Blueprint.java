@@ -30,7 +30,9 @@ public abstract class Blueprint {
      * @param world
      */
     public abstract boolean placeInWorld(BlockPos pos, World world);
-    
+
+    //TODO: Resolve NullPointerException occurring upon Invoke of getName
+    //Invoking getName on Blueprints Results in a NullPointerException
     public String getName() {
         return name;
     }
