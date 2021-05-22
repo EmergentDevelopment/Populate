@@ -1,7 +1,7 @@
 package dev.emergent.populate.settings;
 
 import dev.emergent.populate.blueprint.Blueprint;
-import dev.emergent.populate.util.registries.FilePathRegistry;
+import dev.emergent.populate.PopulateRegistry;
 import me.lambdaurora.spruceui.Position;
 import me.lambdaurora.spruceui.SpruceTexts;
 import me.lambdaurora.spruceui.screen.SpruceScreen;
@@ -29,7 +29,7 @@ public class BlueprintOptionsScreen extends SpruceScreen {
     }
 
     private void blueprintWidget(GenerationStep.Feature feature) {
-        List<Blueprint> featureType = FilePathRegistry.BLUEPRINTS.get(feature);
+        List<Blueprint> featureType = PopulateRegistry.BLUEPRINTS.get(feature);
         for (Blueprint currentBlueprint :
                 featureType) {
             //Resolve NullPointerException caused by #getName

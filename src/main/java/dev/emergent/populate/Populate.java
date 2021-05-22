@@ -1,6 +1,5 @@
 package dev.emergent.populate;
 
-import dev.emergent.populate.util.registries.FilePathRegistry;
 import net.fabricmc.api.ModInitializer;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -13,7 +12,7 @@ public class Populate implements ModInitializer {
     public void onInitialize() {
         Populate.LOGGER.info("Initializing Populate");
 
-        FilePathRegistry.init();
+        PopulateRegistry.init();
 
         Populate.LOGGER.info("Populate Initialization Complete");
     }
