@@ -9,6 +9,7 @@ import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.nio.file.Path;
 
 public class Schematic extends Blueprint {
@@ -16,9 +17,13 @@ public class Schematic extends Blueprint {
     public Schematic loadFromFile(Path filePath) throws IOException, IllegalArgumentException {
         CompoundTag nbtStructure = NbtIo.readCompressed(filePath.toFile());
         
-        if (!nbtStructure.contains("Blocks") && (!nbtStructure.contains("AddBlocks") | !nbtStructure.contains("Add"))) {
+        if (!nbtStructure.contains("Schematic")) {
+            throw new UnsupportedEncodingException("NBT structure does not have a root level Schematic tag.");
+        } else if (!nbtStructure.contains("Blocks") && (!nbtStructure.contains("AddBlocks") | !nbtStructure.contains("Add"))) {
             throw new IllegalArgumentException("Invalid schematic file; NBT structure is missing tags for block data.");
         }
+        
+        this.name = filePath.toString();
         
         byte[] upperBlockIdBits = new byte[0];
         byte[] lowerBlockIdBits = nbtStructure.getByteArray("Blocks");
