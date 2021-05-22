@@ -16,7 +16,7 @@ public class Schematic extends Blueprint {
     public Schematic loadFromFile(Path filePath) throws IOException, IllegalArgumentException {
         CompoundTag nbtStructure = NbtIo.readCompressed(filePath.toFile());
         
-        if (!nbtStructure.contains("Blocks") && (!nbtStructure.contains("AddBlocks") | !nbtStructure.contains("Add"))) {
+        if (!nbtStructure.contains("Blocks") && !nbtStructure.contains("AddBlocks") && !nbtStructure.contains("Add")) {
             throw new IllegalArgumentException("Invalid schematic file; NBT structure is missing tags for block data.");
         }
         

@@ -19,7 +19,6 @@ public abstract class Blueprint {
     
     /**
      * Reads the file at the specified path and parses relevant block data.
-     *
      * @param filePath Desired NBT file to parse.
      */
     public abstract Blueprint loadFromFile(Path filePath) throws IOException;
@@ -30,9 +29,7 @@ public abstract class Blueprint {
      * @param world
      */
     public abstract boolean placeInWorld(BlockPos pos, World world);
-
-    //TODO: Resolve NullPointerException occurring upon Invoke of getName
-    //Invoking getName on Blueprints Results in a NullPointerException
+    
     public String getName() {
         return name;
     }
