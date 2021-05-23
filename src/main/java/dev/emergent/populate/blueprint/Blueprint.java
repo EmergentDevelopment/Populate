@@ -13,22 +13,35 @@ import java.util.Map;
  * Represents a file format which contains NBT data describing an arrangement of blocks that comprise a structure.
  */
 public abstract class Blueprint {
-    protected Map<BlockPos, Block> blocks = new HashMap<>();
+    public static Map<Integer, Block> DEFAULT_BLOCK_PALETTE;
+    
+    protected final Path filePath;
+    
+    protected Map<Integer, Block> blockPaletteMap;
+    protected Map<BlockPos, Block> blockOffsetMap;
     protected String name;
     protected float weight;
     
-    /**
-     * Reads the file at the specified path and parses relevant block data.
-     * @param filePath Desired NBT file to parse.
-     */
-    public abstract Blueprint loadFromFile(Path filePath) throws IOException;
+    protected Blueprint(Path filePath) {
+        blockPaletteMap = new HashMap<>();
+        blockOffsetMap = new HashMap<>();
+        
+        this.filePath = filePath.toAbsolutePath();
+    }
+    
+    static {
+        DEFAULT_BLOCK_PALETTE = new HashMap<>();
+    }
     
     /**
-     * Places the blocks at a point in the world.
-     * @param pos
-     * @param world
+     * Attempts to read the file at the path associated with this object and parses relevant data.
      */
-    public abstract boolean placeInWorld(BlockPos pos, World world);
+    public abstract void loadFromDisk() throws IOException;
+    
+    /**
+     * Places this structure at a point in the world.
+     */
+    public abstract void placeInWorld(BlockPos pos, World world);
     
     public String getName() {
         return name;

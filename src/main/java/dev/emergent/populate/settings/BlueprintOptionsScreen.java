@@ -29,7 +29,7 @@ public class BlueprintOptionsScreen extends SpruceScreen {
     }
     
     private void blueprintWidget(GenerationStep.Feature feature) {
-        List<Blueprint> featureType = PopulateRegistry.getBlueprint(feature);
+        List<Blueprint> featureType = PopulateRegistry.getBlueprints(feature);
         for (Blueprint currentBlueprint : featureType) {
             this.tabbedWidget.addTabEntry(new LiteralText(currentBlueprint.getName()), null, (width, height) ->
                     buildOptionList(Position.origin(), width, height));
