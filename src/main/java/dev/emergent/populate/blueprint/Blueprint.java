@@ -13,7 +13,7 @@ import java.util.Map;
  * Represents a file format which contains NBT data describing an arrangement of blocks that comprise a structure.
  */
 public abstract class Blueprint {
-    public static Map<Integer, Block> DEFAULT_BLOCK_PALETTE;
+    public static Map<Integer, Block> FALLBACK_BLOCK_PALETTE;
     
     protected final Path filePath;
     
@@ -30,7 +30,7 @@ public abstract class Blueprint {
     }
     
     static {
-        DEFAULT_BLOCK_PALETTE = new HashMap<>();
+        FALLBACK_BLOCK_PALETTE = new HashMap<>();
     }
     
     /**

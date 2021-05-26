@@ -14,6 +14,9 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.util.Optional;
 
+/**
+ * Pre-flattening schematic format used by Schematica and MCEdit.
+ */
 public class Schematic extends Blueprint {
     public Schematic(Path filePath) {
         super(filePath);
@@ -23,7 +26,9 @@ public class Schematic extends Blueprint {
     public void loadFromDisk() throws IOException, IllegalArgumentException {
         CompoundTag nbtStructure = NbtIo.readCompressed(filePath.toFile());
         
-        if (!nbtStructure.contains("Blocks") && !nbtStructure.contains("AddBlocks")) {
+        if (!nbtStructure.contains("Length") || !nbtStructure.contains("Width") ||
+            !nbtStructure.contains("Height") || !nbtStructure.contains("Blocks")) {
+            
             throw new IllegalArgumentException("Invalid schematic file; NBT structure is missing tags for block data.");
         }
         
@@ -49,21 +54,46 @@ public class Schematic extends Blueprint {
         } else { // TODO: MCEdit 2 palette support
             Populate.LOGGER.info(
                     shortPath.toString() + " did not contain a supported palette format. " +
-                    "Using default block palette for this schematic."
+                    "The fallback block palette will be used instead; some things may not look right!"
             );
             
-            this.blockPaletteMap = Blueprint.DEFAULT_BLOCK_PALETTE;
+            this.blockPaletteMap = Blueprint.FALLBACK_BLOCK_PALETTE;
         }
         
         byte[] blockIds = nbtStructure.getByteArray("Blocks");
-        byte[] metadata = nbtStructure.getByteArray("Data");
+        byte[] additionalNibbles = null;
         
-        if (nbtStructure.contains("AddBlocks")) {
+        if (nbtStructure.contains("AddBlocks")) { // TODO: old schematica format support
             byte[] additionalBytes = nbtStructure.getByteArray("AddBlocks");
-            // TODO: implement this
+            additionalNibbles = new byte[additionalBytes.length * 2];
+    
+            for (int index = 0; index < additionalBytes.length; index++) {
+                additionalNibbles[index * 2] = (byte) ((additionalBytes[index] >> 4) & 0xF);
+                additionalNibbles[index * 2 + 1] = (byte) ((additionalBytes[index]) & 0xF);
+            }
         }
         
-        // TODO: old schematica format support
+        int length = nbtStructure.getInt("Length");
+        int width = nbtStructure.getInt("Width");
+        int height = nbtStructure.getInt("Height");
+        
+        for (int x = 0; x < width; ++x) {
+            for (int y = 0; y < height; ++y) {
+                for (int z = 0; z < length; ++z) {
+                    int index = y * width * length + z * width + x;
+                    int blockID = blockIds[index] & 0xFF;
+                    
+                    if (additionalNibbles != null) {
+                        blockID |= additionalNibbles[index] << 8;
+                    }
+                    
+                    this.blockOffsetMap.put(
+                            new BlockPos(x, y, z),
+                            Registry.BLOCK.get(blockID)
+                    );
+                }
+            }
+        }
     }
     
     @Override

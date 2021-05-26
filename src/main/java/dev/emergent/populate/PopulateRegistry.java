@@ -15,7 +15,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class PopulateRegistry {
     private static final Map<GenerationStep.Feature, List<Blueprint>> BLUEPRINTS = new HashMap<>();
@@ -25,7 +24,7 @@ public class PopulateRegistry {
             Block block = Registry.BLOCK.get(identifier);
             int id = Registry.BLOCK.getRawId(block);
             
-            Blueprint.DEFAULT_BLOCK_PALETTE.put(id, block);
+            Blueprint.FALLBACK_BLOCK_PALETTE.put(id, block);
         }
         
         createDirectory(Paths.get("populate"));
@@ -56,7 +55,9 @@ public class PopulateRegistry {
         List<Blueprint> blueprints = new ArrayList<>();
         
         try {
-            List<Path> filePaths = Files.walk(path).filter(Files::isRegularFile).collect(Collectors.toList());
+            List<Path> filePaths = Files.walk(path)
+                    .filter(Files::isRegularFile)
+                    .collect(Collectors.toList());
             
             for (Path filePath : filePaths) {
                 try {
